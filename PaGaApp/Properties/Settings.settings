@@ -1,0 +1,96 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PaGaApp.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Col1ToDo" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;Id Zlecenia&lt;/string&gt;
+  &lt;string&gt;Imie klienta&lt;/string&gt;
+  &lt;string&gt;Nazwisko klienta&lt;/string&gt;
+  &lt;string&gt;Marka samochodu&lt;/string&gt;
+  &lt;string&gt;Model auta&lt;/string&gt;
+  &lt;string&gt;Data przyjęcia zlecenia&lt;/string&gt;
+  &lt;string&gt;Numer rejestracyjny&lt;/string&gt;
+  &lt;string&gt;Numer VIN&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="Col2ToDo" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Value>
+    </Setting>
+    <Setting Name="Col1Done" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;Id Zlecenia&lt;/string&gt;
+  &lt;string&gt;Imie klienta&lt;/string&gt;
+  &lt;string&gt;Nazwisko klienta&lt;/string&gt;
+  &lt;string&gt;Marka samochodu&lt;/string&gt;
+  &lt;string&gt;Model auta&lt;/string&gt;
+  &lt;string&gt;Data przyjęcia zlecenia&lt;/string&gt;
+  &lt;string&gt;Numer rejestracyjny&lt;/string&gt;
+  &lt;string&gt;Numer VIN&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="Col2Done" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Value>
+    </Setting>
+    <Setting Name="Col1Klient" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;Id Klienta&lt;/string&gt;
+  &lt;string&gt;Imie&lt;/string&gt;
+  &lt;string&gt;Nazwisko&lt;/string&gt;
+  &lt;string&gt;Numer telefonu&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="Col2Klient" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Value>
+    </Setting>
+    <Setting Name="ColZlecenia" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;Id Zlecenia&lt;/string&gt;
+  &lt;string&gt;Imie klienta&lt;/string&gt;
+  &lt;string&gt;Nazwisko klienta&lt;/string&gt;
+  &lt;string&gt;Marka samochodu&lt;/string&gt;
+  &lt;string&gt;Model auta&lt;/string&gt;
+  &lt;string&gt;Data przyjęcia zlecenia&lt;/string&gt;
+  &lt;string&gt;Numer rejestracyjny&lt;/string&gt;
+  &lt;string&gt;Numer VIN&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ColKlienci" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;Id Klienta&lt;/string&gt;
+  &lt;string&gt;Imie&lt;/string&gt;
+  &lt;string&gt;Nazwisko&lt;/string&gt;
+  &lt;string&gt;Numer telefonu&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="LastSearchDone" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastSerachToDo" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastSerachKlient" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastTimeDone" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastTimeToDo" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastDowolnaDone" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastDowolnaToDo" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>

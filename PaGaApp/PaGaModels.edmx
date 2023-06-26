@@ -1,0 +1,526 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PaGaCon.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Kategoria">
+          <Key>
+            <PropertyRef Name="IdKat" />
+          </Key>
+          <Property Name="IdKat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazwa" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Klient">
+          <Key>
+            <PropertyRef Name="IdKlienta" />
+          </Key>
+          <Property Name="IdKlienta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Imie" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Nazwisko" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="NumerTelefonu" Type="varchar" MaxLength="9" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logi">
+          <Key>
+            <PropertyRef Name="IdLog" />
+          </Key>
+          <Property Name="IdLog" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Data" Type="date" />
+          <Property Name="TextLog" Type="varchar(max)" />
+          <Property Name="IdPracownika" Type="int" />
+        </EntityType>
+        <EntityType Name="Pracownik">
+          <Key>
+            <PropertyRef Name="IdPracownika" />
+          </Key>
+          <Property Name="IdPracownika" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Imie" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Nazwisko" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Haslo" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Uprawnienia" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Samochod">
+          <Key>
+            <PropertyRef Name="IdSamochodu" />
+          </Key>
+          <Property Name="IdSamochodu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdKlient" Type="int" />
+          <Property Name="Marka" Type="varchar" MaxLength="20" />
+          <Property Name="Model" Type="varchar" MaxLength="20" />
+          <Property Name="NumerRejestracyjny" Type="varchar" MaxLength="7" />
+          <Property Name="NumerVIN" Type="varchar" MaxLength="17" />
+          <Property Name="DataProdukcji" Type="int" />
+          <Property Name="MocKW" Type="int" />
+          <Property Name="MocKM" Type="int" />
+          <Property Name="Opis" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Usluga">
+          <Key>
+            <PropertyRef Name="IdUslugi" />
+          </Key>
+          <Property Name="IdUslugi" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdZlecenia" Type="int" />
+          <Property Name="Nazwa" Type="varchar" MaxLength="15" />
+          <Property Name="Cena" Type="float" />
+          <Property Name="IdKategorii" Type="int" />
+        </EntityType>
+        <EntityType Name="Zlecenie">
+          <Key>
+            <PropertyRef Name="IdZlecenia" />
+          </Key>
+          <Property Name="IdZlecenia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdKlienta" Type="int" Nullable="false" />
+          <Property Name="IdSamochodu" Type="int" Nullable="false" />
+          <Property Name="Data_Przyjecia" Type="date" Nullable="false" />
+          <Property Name="Data_Zamkniecia" Type="date" />
+          <Property Name="Koszt_Zlecenia" Type="float" />
+          <Property Name="IdPracownika" Type="int" Nullable="false" />
+          <Property Name="Czyzakończone" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Kat">
+          <End Role="Kategoria" Type="Self.Kategoria" Multiplicity="0..1" />
+          <End Role="Usluga" Type="Self.Usluga" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategoria">
+              <PropertyRef Name="IdKat" />
+            </Principal>
+            <Dependent Role="Usluga">
+              <PropertyRef Name="IdKategorii" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Klient">
+          <End Role="Klient" Type="Self.Klient" Multiplicity="0..1" />
+          <End Role="Samochod" Type="Self.Samochod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klient">
+              <PropertyRef Name="IdKlienta" />
+            </Principal>
+            <Dependent Role="Samochod">
+              <PropertyRef Name="IdKlient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Klient_Zlecenie">
+          <End Role="Klient" Type="Self.Klient" Multiplicity="1" />
+          <End Role="Zlecenie" Type="Self.Zlecenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klient">
+              <PropertyRef Name="IdKlienta" />
+            </Principal>
+            <Dependent Role="Zlecenie">
+              <PropertyRef Name="IdKlienta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Pracownik">
+          <End Role="Pracownik" Type="Self.Pracownik" Multiplicity="1" />
+          <End Role="Zlecenie" Type="Self.Zlecenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pracownik">
+              <PropertyRef Name="IdPracownika" />
+            </Principal>
+            <Dependent Role="Zlecenie">
+              <PropertyRef Name="IdPracownika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Samochod">
+          <End Role="Samochod" Type="Self.Samochod" Multiplicity="1" />
+          <End Role="Zlecenie" Type="Self.Zlecenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Samochod">
+              <PropertyRef Name="IdSamochodu" />
+            </Principal>
+            <Dependent Role="Zlecenie">
+              <PropertyRef Name="IdSamochodu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zlecenie">
+          <End Role="Zlecenie" Type="Self.Zlecenie" Multiplicity="0..1" />
+          <End Role="Usluga" Type="Self.Usluga" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zlecenie">
+              <PropertyRef Name="IdZlecenia" />
+            </Principal>
+            <Dependent Role="Usluga">
+              <PropertyRef Name="IdZlecenia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Lk_Logi">
+          <End Role="Pracownik" Type="Self.Pracownik" Multiplicity="0..1" />
+          <End Role="Logi" Type="Self.Logi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pracownik">
+              <PropertyRef Name="IdPracownika" />
+            </Principal>
+            <Dependent Role="Logi">
+              <PropertyRef Name="IdPracownika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PaGaConStoreContainer">
+          <EntitySet Name="Kategoria" EntityType="Self.Kategoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Klient" EntityType="Self.Klient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logi" EntityType="Self.Logi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pracownik" EntityType="Self.Pracownik" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Samochod" EntityType="Self.Samochod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usluga" EntityType="Self.Usluga" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zlecenie" EntityType="Self.Zlecenie" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Kat" Association="Self.FK_Kat">
+            <End Role="Kategoria" EntitySet="Kategoria" />
+            <End Role="Usluga" EntitySet="Usluga" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Klient" Association="Self.FK_Klient">
+            <End Role="Klient" EntitySet="Klient" />
+            <End Role="Samochod" EntitySet="Samochod" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Klient_Zlecenie" Association="Self.Fk_Klient_Zlecenie">
+            <End Role="Klient" EntitySet="Klient" />
+            <End Role="Zlecenie" EntitySet="Zlecenie" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Pracownik" Association="Self.Fk_Pracownik">
+            <End Role="Pracownik" EntitySet="Pracownik" />
+            <End Role="Zlecenie" EntitySet="Zlecenie" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Samochod" Association="Self.Fk_Samochod">
+            <End Role="Samochod" EntitySet="Samochod" />
+            <End Role="Zlecenie" EntitySet="Zlecenie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zlecenie" Association="Self.FK_Zlecenie">
+            <End Role="Zlecenie" EntitySet="Zlecenie" />
+            <End Role="Usluga" EntitySet="Usluga" />
+          </AssociationSet>
+          <AssociationSet Name="Lk_Logi" Association="Self.Lk_Logi">
+            <End Role="Pracownik" EntitySet="Pracownik" />
+            <End Role="Logi" EntitySet="Logi" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PaGaCon" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Klient">
+          <Key>
+            <PropertyRef Name="IdKlienta" />
+          </Key>
+          <Property Name="IdKlienta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Imie" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nazwisko" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumerTelefonu" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Samochods" Relationship="Self.FK_Klient" FromRole="Klient" ToRole="Samochod" />
+          <NavigationProperty Name="Zlecenies" Relationship="Self.Fk_Klient_Zlecenie" FromRole="Klient" ToRole="Zlecenie" />
+        </EntityType>
+        <EntityType Name="Logi">
+          <Key>
+            <PropertyRef Name="IdLog" />
+          </Key>
+          <Property Name="IdLog" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Data" Type="DateTime" Precision="0" />
+          <Property Name="TextLog" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdPracownika" Type="Int32" />
+          <NavigationProperty Name="Pracownik" Relationship="Self.Lk_Logi" FromRole="Logi" ToRole="Pracownik" />
+        </EntityType>
+        <EntityType Name="Pracownik">
+          <Key>
+            <PropertyRef Name="IdPracownika" />
+          </Key>
+          <Property Name="IdPracownika" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Imie" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nazwisko" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Haslo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Uprawnienia" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Logis" Relationship="Self.Lk_Logi" FromRole="Pracownik" ToRole="Logi" />
+          <NavigationProperty Name="Zlecenies" Relationship="Self.Fk_Pracownik" FromRole="Pracownik" ToRole="Zlecenie" />
+        </EntityType>
+        <EntityType Name="Samochod">
+          <Key>
+            <PropertyRef Name="IdSamochodu" />
+          </Key>
+          <Property Name="IdSamochodu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdKlient" Type="Int32" />
+          <Property Name="Marka" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Model" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NumerRejestracyjny" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="NumerVIN" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="DataProdukcji" Type="Int32" />
+          <Property Name="MocKW" Type="Int32" />
+          <Property Name="MocKM" Type="Int32" />
+          <Property Name="Opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Klient" Relationship="Self.FK_Klient" FromRole="Samochod" ToRole="Klient" />
+          <NavigationProperty Name="Zlecenies" Relationship="Self.Fk_Samochod" FromRole="Samochod" ToRole="Zlecenie" />
+        </EntityType>
+        <EntityType Name="Usluga">
+          <Key>
+            <PropertyRef Name="IdUslugi" />
+          </Key>
+          <Property Name="IdUslugi" Type="Int32" Nullable="false" />
+          <Property Name="IdZlecenia" Type="Int32" />
+          <Property Name="Nazwa" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Cena" Type="Double" />
+          <NavigationProperty Name="Zlecenie" Relationship="Self.FK_Zlecenie" FromRole="Usluga" ToRole="Zlecenie" />
+          <Property Name="IdKategorii" Type="Int32" />
+          <NavigationProperty Name="Kategoria" Relationship="PaGaCon.FK_Kat" FromRole="Usluga" ToRole="Kategoria" />
+        </EntityType>
+        <EntityType Name="Zlecenie">
+          <Key>
+            <PropertyRef Name="IdZlecenia" />
+          </Key>
+          <Property Name="IdZlecenia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdKlienta" Type="Int32" Nullable="false" />
+          <Property Name="IdSamochodu" Type="Int32" Nullable="false" />
+          <Property Name="Data_Przyjecia" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Data_Zamkniecia" Type="DateTime" Precision="0" />
+          <Property Name="Koszt_Zlecenia" Type="Double" />
+          <Property Name="IdPracownika" Type="Int32" Nullable="false" />
+          <Property Name="Czyzakończone" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Klient" Relationship="Self.Fk_Klient_Zlecenie" FromRole="Zlecenie" ToRole="Klient" />
+          <NavigationProperty Name="Pracownik" Relationship="Self.Fk_Pracownik" FromRole="Zlecenie" ToRole="Pracownik" />
+          <NavigationProperty Name="Samochod" Relationship="Self.Fk_Samochod" FromRole="Zlecenie" ToRole="Samochod" />
+          <NavigationProperty Name="Uslugas" Relationship="Self.FK_Zlecenie" FromRole="Zlecenie" ToRole="Usluga" />
+        </EntityType>
+        <Association Name="FK_Klient">
+          <End Role="Klient" Type="Self.Klient" Multiplicity="0..1" />
+          <End Role="Samochod" Type="Self.Samochod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klient">
+              <PropertyRef Name="IdKlienta" />
+            </Principal>
+            <Dependent Role="Samochod">
+              <PropertyRef Name="IdKlient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Klient_Zlecenie">
+          <End Role="Klient" Type="Self.Klient" Multiplicity="1" />
+          <End Role="Zlecenie" Type="Self.Zlecenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Klient">
+              <PropertyRef Name="IdKlienta" />
+            </Principal>
+            <Dependent Role="Zlecenie">
+              <PropertyRef Name="IdKlienta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Lk_Logi">
+          <End Role="Pracownik" Type="Self.Pracownik" Multiplicity="0..1" />
+          <End Role="Logi" Type="Self.Logi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pracownik">
+              <PropertyRef Name="IdPracownika" />
+            </Principal>
+            <Dependent Role="Logi">
+              <PropertyRef Name="IdPracownika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Pracownik">
+          <End Role="Pracownik" Type="Self.Pracownik" Multiplicity="1" />
+          <End Role="Zlecenie" Type="Self.Zlecenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pracownik">
+              <PropertyRef Name="IdPracownika" />
+            </Principal>
+            <Dependent Role="Zlecenie">
+              <PropertyRef Name="IdPracownika" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Samochod">
+          <End Role="Samochod" Type="Self.Samochod" Multiplicity="1" />
+          <End Role="Zlecenie" Type="Self.Zlecenie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Samochod">
+              <PropertyRef Name="IdSamochodu" />
+            </Principal>
+            <Dependent Role="Zlecenie">
+              <PropertyRef Name="IdSamochodu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zlecenie">
+          <End Role="Zlecenie" Type="Self.Zlecenie" Multiplicity="0..1" />
+          <End Role="Usluga" Type="Self.Usluga" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zlecenie">
+              <PropertyRef Name="IdZlecenia" />
+            </Principal>
+            <Dependent Role="Usluga">
+              <PropertyRef Name="IdZlecenia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PaGaContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Klients" EntityType="Self.Klient" />
+          <EntitySet Name="Logis" EntityType="Self.Logi" />
+          <EntitySet Name="Pracowniks" EntityType="Self.Pracownik" />
+          <EntitySet Name="Samochods" EntityType="Self.Samochod" />
+          <EntitySet Name="Uslugas" EntityType="Self.Usluga" />
+          <EntitySet Name="Zlecenies" EntityType="Self.Zlecenie" />
+          <AssociationSet Name="FK_Klient" Association="Self.FK_Klient">
+            <End Role="Klient" EntitySet="Klients" />
+            <End Role="Samochod" EntitySet="Samochods" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Klient_Zlecenie" Association="Self.Fk_Klient_Zlecenie">
+            <End Role="Klient" EntitySet="Klients" />
+            <End Role="Zlecenie" EntitySet="Zlecenies" />
+          </AssociationSet>
+          <AssociationSet Name="Lk_Logi" Association="Self.Lk_Logi">
+            <End Role="Pracownik" EntitySet="Pracowniks" />
+            <End Role="Logi" EntitySet="Logis" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Pracownik" Association="Self.Fk_Pracownik">
+            <End Role="Pracownik" EntitySet="Pracowniks" />
+            <End Role="Zlecenie" EntitySet="Zlecenies" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Samochod" Association="Self.Fk_Samochod">
+            <End Role="Samochod" EntitySet="Samochods" />
+            <End Role="Zlecenie" EntitySet="Zlecenies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zlecenie" Association="Self.FK_Zlecenie">
+            <End Role="Zlecenie" EntitySet="Zlecenies" />
+            <End Role="Usluga" EntitySet="Uslugas" />
+          </AssociationSet>
+          <EntitySet Name="Kategorias" EntityType="PaGaCon.Kategoria" />
+          <AssociationSet Name="FK_Kat" Association="PaGaCon.FK_Kat">
+            <End Role="Kategoria" EntitySet="Kategorias" />
+            <End Role="Usluga" EntitySet="Uslugas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Kategoria">
+          <Key>
+            <PropertyRef Name="IdKat" />
+          </Key>
+          <Property Name="IdKat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazwa" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Uslugas" Relationship="PaGaCon.FK_Kat" FromRole="Kategoria" ToRole="Usluga" />
+        </EntityType>
+        <Association Name="FK_Kat">
+          <End Type="PaGaCon.Kategoria" Role="Kategoria" Multiplicity="0..1" />
+          <End Type="PaGaCon.Usluga" Role="Usluga" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategoria">
+              <PropertyRef Name="IdKat" />
+            </Principal>
+            <Dependent Role="Usluga">
+              <PropertyRef Name="IdKategorii" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PaGaConStoreContainer" CdmEntityContainer="PaGaContext">
+          <EntitySetMapping Name="Klients">
+            <EntityTypeMapping TypeName="PaGaCon.Klient">
+              <MappingFragment StoreEntitySet="Klient">
+                <ScalarProperty Name="IdKlienta" ColumnName="IdKlienta" />
+                <ScalarProperty Name="Imie" ColumnName="Imie" />
+                <ScalarProperty Name="Nazwisko" ColumnName="Nazwisko" />
+                <ScalarProperty Name="NumerTelefonu" ColumnName="NumerTelefonu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logis">
+            <EntityTypeMapping TypeName="PaGaCon.Logi">
+              <MappingFragment StoreEntitySet="Logi">
+                <ScalarProperty Name="IdLog" ColumnName="IdLog" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="TextLog" ColumnName="TextLog" />
+                <ScalarProperty Name="IdPracownika" ColumnName="IdPracownika" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pracowniks">
+            <EntityTypeMapping TypeName="PaGaCon.Pracownik">
+              <MappingFragment StoreEntitySet="Pracownik">
+                <ScalarProperty Name="IdPracownika" ColumnName="IdPracownika" />
+                <ScalarProperty Name="Imie" ColumnName="Imie" />
+                <ScalarProperty Name="Nazwisko" ColumnName="Nazwisko" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Haslo" ColumnName="Haslo" />
+                <ScalarProperty Name="Uprawnienia" ColumnName="Uprawnienia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Samochods">
+            <EntityTypeMapping TypeName="PaGaCon.Samochod">
+              <MappingFragment StoreEntitySet="Samochod">
+                <ScalarProperty Name="IdSamochodu" ColumnName="IdSamochodu" />
+                <ScalarProperty Name="IdKlient" ColumnName="IdKlient" />
+                <ScalarProperty Name="Marka" ColumnName="Marka" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="NumerRejestracyjny" ColumnName="NumerRejestracyjny" />
+                <ScalarProperty Name="NumerVIN" ColumnName="NumerVIN" />
+                <ScalarProperty Name="DataProdukcji" ColumnName="DataProdukcji" />
+                <ScalarProperty Name="MocKW" ColumnName="MocKW" />
+                <ScalarProperty Name="MocKM" ColumnName="MocKM" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uslugas">
+            <EntityTypeMapping TypeName="PaGaCon.Usluga">
+              <MappingFragment StoreEntitySet="Usluga">
+                <ScalarProperty Name="IdKategorii" ColumnName="IdKategorii" />
+                <ScalarProperty Name="IdUslugi" ColumnName="IdUslugi" />
+                <ScalarProperty Name="IdZlecenia" ColumnName="IdZlecenia" />
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+                <ScalarProperty Name="Cena" ColumnName="Cena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zlecenies">
+            <EntityTypeMapping TypeName="PaGaCon.Zlecenie">
+              <MappingFragment StoreEntitySet="Zlecenie">
+                <ScalarProperty Name="IdZlecenia" ColumnName="IdZlecenia" />
+                <ScalarProperty Name="IdKlienta" ColumnName="IdKlienta" />
+                <ScalarProperty Name="IdSamochodu" ColumnName="IdSamochodu" />
+                <ScalarProperty Name="Data_Przyjecia" ColumnName="Data_Przyjecia" />
+                <ScalarProperty Name="Data_Zamkniecia" ColumnName="Data_Zamkniecia" />
+                <ScalarProperty Name="Koszt_Zlecenia" ColumnName="Koszt_Zlecenia" />
+                <ScalarProperty Name="IdPracownika" ColumnName="IdPracownika" />
+                <ScalarProperty Name="Czyzakończone" ColumnName="Czyzakończone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategorias">
+            <EntityTypeMapping TypeName="PaGaCon.Kategoria">
+              <MappingFragment StoreEntitySet="Kategoria">
+                <ScalarProperty Name="Nazwa" ColumnName="Nazwa" />
+                <ScalarProperty Name="IdKat" ColumnName="IdKat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
